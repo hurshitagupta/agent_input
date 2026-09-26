@@ -1,0 +1,11 @@
+=== VALIDATION DEMO ===
+
+Success case:
+Text: Plan a monthly sales report
+Text length: 27
+Valid: True
+Message: Input passed validation
+
+Failure case:
+Text length: 2001
+Rejected: text must be <= 2000 characters

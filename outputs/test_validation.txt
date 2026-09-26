@@ -1,0 +1,13 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Hurshita Gupta\OneDrive\Desktop\agent_input\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Hurshita Gupta\OneDrive\Desktop\agent_input
+configfile: pyproject.toml
+collecting ... collected 4 items
+
+tests/test_validation.py::test_valid_input_passes_validation PASSED      [ 25%]
+tests/test_validation.py::test_maximum_length_is_allowed PASSED          [ 50%]
+tests/test_validation.py::test_text_over_limit_is_rejected PASSED        [ 75%]
+tests/test_validation.py::test_empty_text_is_rejected PASSED             [100%]
+
+============================== 4 passed in 0.05s ==============================

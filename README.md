@@ -227,5 +227,136 @@ The following safeguards are demonstrated in this task:
 
 Step limits, timeout, and retry are not applicable to this task because normalization is a single local string-processing operation with no loops, external services, or transient failures.
 
+---
 
+## Task 3 — Validation
 
+### Objective
+
+This task implements validation rules for the normalized input. The goal is to ensure that only valid input within the allowed limits continues to later processing.
+
+### Implementation
+
+The validation logic is implemented in `validation.py`.
+
+The task reuses the `InputRequest` object from Task 1 and works with normalized input from Task 2.
+
+The following validation rules are applied:
+
+- `text` must be a string.
+- `text` cannot be empty.
+- `text` must not exceed 2000 characters.
+
+The maximum length is defined as:
+
+```python
+MAX_TEXT_LENGTH = 2000
+```
+
+A `ValidationResult` object is returned for valid input and includes:
+
+- validation status,
+- text length,
+- validation message.
+
+### Success Case
+
+Example valid input:
+
+```text
+Plan a monthly sales report
+```
+
+Expected result:
+
+```text
+Valid: True
+Message: Input passed validation
+```
+
+The actual text length is also recorded as part of the result.
+
+### Boundary Case
+
+An input containing exactly:
+
+```text
+2000 characters
+```
+
+is accepted.
+
+This verifies that the configured limit itself is valid.
+
+### Rejection Case
+
+An input containing more than 2000 words is rejected.
+
+Expected result:
+
+```text
+Rejected: text must be <= 2000 characters
+```
+
+Empty text is also rejected with:
+
+```text
+text is required
+```
+
+### Run Command
+
+Run the implementation using:
+
+```powershell
+python validation.py
+```
+
+### Automated Tests
+
+Run the tests using:
+
+```powershell
+pytest tests/test_validation.py -v
+```
+
+The tests cover:
+
+- Normal valid input passes validation.
+- Input with exactly 2000 characters is accepted.
+- Input with more than 2000 characters is rejected.
+- Empty text is rejected.
+
+### Evidence
+
+Implementation output:
+
+```text
+outputs/validation.txt
+```
+
+Automated test output:
+
+```text
+outputs/test_validation.txt
+```
+
+### Measurement
+
+The validation result records the actual input character count.
+
+This provides measurable evidence for the configured input-size limit.
+
+Example:
+
+```text
+Text length: 27
+Valid: True
+```
+
+For a rejected request:
+
+```text
+Text length: 2001
+Rejected: text must be <= 2000 characters
+```

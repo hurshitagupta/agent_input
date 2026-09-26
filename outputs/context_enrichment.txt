@@ -1,0 +1,20 @@
+=== CONTEXT ENRICHMENT DEMO ===
+
+Success case:
+Request ID: 302b6e5e-bccc-49ef-9a7d-2e85dbe3d934
+Text: Plan a monthly sales report
+Tenant: demo-tenant
+User: user-101
+Locale: en-IN
+Policy: standard-policy
+
+Provenance:
+text: user_input
+request_id: system_generated
+tenant: trusted_context
+user: trusted_context
+locale: trusted_context
+policy: trusted_context
+
+Failure case:
+Rejected: trusted tenant is required

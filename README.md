@@ -113,3 +113,119 @@ The following safeguards are implemented in this task:
 - **Secret hygiene:** No credentials or secrets are stored in the source code.
 
 Step limits, retry, and timeout are not required for the local schema parser because it performs a single synchronous operation without loops, external services, or transient failures.
+
+---
+
+## Task 2 — Normalization
+
+### Objective
+
+This task implements input normalization so that user text is converted into a consistent and clean format before further validation or processing.
+
+### Implementation
+
+The normalization logic is implemented in `normalization.py`.
+
+The task reuses the `InputRequest` schema from Task 1 and applies the following normalization steps:
+
+- Normalizes Unicode text into a consistent form.
+- Removes leading and trailing spaces.
+- Replaces repeated spaces with a single space.
+- Converts tabs and newlines into normal spacing.
+- Rejects input that becomes empty after normalization.
+
+The existing `InputRequest` schema is reused instead of creating another input structure.
+
+### Example
+
+Raw input:
+
+```text
+"   Plan    a
+report     for   sales   "
+```
+
+Normalized result:
+
+```text
+"Plan a report for sales"
+```
+
+The text content is preserved while unnecessary whitespace is removed.
+
+### Success Case
+
+Example input:
+
+```python
+InputRequest(
+    text="   Plan    a\nreport\tfor   sales   "
+)
+```
+
+Expected normalized result:
+
+```text
+InputRequest(text='Plan a report for sales')
+```
+
+### Rejection Case
+
+Whitespace-only input is rejected because it contains no usable text after normalization.
+
+Expected result:
+
+```text
+Rejected: text is empty after normalization
+```
+
+### Run Command
+
+Run the implementation using:
+
+```powershell
+python normalization.py
+```
+
+### Automated Tests
+
+Run the tests using:
+
+```powershell
+pytest tests/test_normalization.py -v
+```
+
+The tests cover:
+
+- Text with repeated whitespace is normalized correctly.
+- Already clean text remains unchanged.
+- Whitespace-only text is rejected.
+
+### Evidence
+
+Implementation output:
+
+```text
+outputs/normalization.txt
+```
+
+Automated test output:
+
+```text
+outputs/test_normalization.txt
+```
+
+### Guardrails
+
+The following safeguards are demonstrated in this task:
+
+- **Validation:** Normalization only accepts string input.
+- **Empty input protection:** Text that becomes empty after normalization is rejected.
+- **Safe normalization:** Text content is preserved while unnecessary whitespace and inconsistent Unicode formatting are normalized.
+- **Failure handling:** Invalid normalized input raises a clear `ValueError`.
+- **Secret hygiene:** No credentials or secrets are stored in the source code.
+
+Step limits, timeout, and retry are not applicable to this task because normalization is a single local string-processing operation with no loops, external services, or transient failures.
+
+
+

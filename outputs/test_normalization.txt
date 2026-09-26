@@ -1,0 +1,12 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Hurshita Gupta\OneDrive\Desktop\agent_input\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Hurshita Gupta\OneDrive\Desktop\agent_input
+configfile: pyproject.toml
+collecting ... collected 3 items
+
+tests/test_normalization.py::test_text_is_normalized PASSED              [ 33%]
+tests/test_normalization.py::test_normalization_preserves_normal_text PASSED [ 66%]
+tests/test_normalization.py::test_empty_text_after_normalization_is_rejected PASSED [100%]
+
+============================== 3 passed in 0.04s ==============================

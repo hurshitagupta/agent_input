@@ -1,0 +1,10 @@
+=== NORMALIZATION DEMO ===
+
+Raw input:
+'   Plan    a\nreport\tfor   sales   '
+
+Normalized input:
+InputRequest(text='Plan a report for sales')
+
+Failure case:
+Rejected: text is empty after normalization

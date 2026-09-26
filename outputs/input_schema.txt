@@ -1,0 +1,10 @@
+=== INPUT SCHEMA DEMO ===
+
+Valid input:
+{'text': 'Plan a report'}
+Parsed input:
+InputRequest(text='Plan a report')
+
+Invalid input:
+{'text': 'Plan a report', 'tenant': 'fake-tenant'}
+Rejected: Protected fields cannot be supplied by user: ['tenant']

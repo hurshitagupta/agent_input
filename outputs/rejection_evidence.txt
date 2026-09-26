@@ -1,0 +1,13 @@
+=== REJECTION EVIDENCE DEMO ===
+
+Success case:
+status: accepted
+text: Plan a monthly sales report
+text_length: 27
+message: Input passed validation
+
+Failure case:
+status: rejected
+stage: input_processing
+reason: text must be <= 2000 characters
+timestamp: 2026-09-26T06:23:13.681618+00:00

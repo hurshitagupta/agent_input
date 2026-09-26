@@ -1,0 +1,13 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Hurshita Gupta\OneDrive\Desktop\agent_input\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Hurshita Gupta\OneDrive\Desktop\agent_input
+configfile: pyproject.toml
+collecting ... collected 4 items
+
+tests/test_rejection_evidence.py::test_valid_input_is_accepted PASSED    [ 25%]
+tests/test_rejection_evidence.py::test_long_input_creates_rejection_evidence PASSED [ 50%]
+tests/test_rejection_evidence.py::test_protected_field_creates_rejection_evidence PASSED [ 75%]
+tests/test_rejection_evidence.py::test_empty_input_creates_rejection_evidence PASSED [100%]
+
+============================== 4 passed in 0.13s ==============================

@@ -523,4 +523,163 @@ The following safeguards are implemented:
 - **Failure handling:** Missing trusted context raises a clear `ValueError`.
 - **Secret hygiene:** No credentials or secrets are stored in source code.
 
+---
+
+## Task 5 — Rejection Evidence
+
+### Objective
+
+This task records clear evidence when an input request is rejected.
+
+Instead of only raising an error, the implementation captures the rejection as structured information so that the reason and stage of failure can be reviewed later.
+
+### Implementation
+
+The rejection evidence logic is implemented in `rejection_evidence.py`.
+
+A `RejectionRecord` is used to store rejection details:
+
+```python
+@dataclass
+class RejectionRecord:
+    status: str
+    stage: str
+    reason: str
+    timestamp: str
+```
+
+For rejected requests, the implementation records:
+
+- rejection status,
+- processing stage,
+- rejection reason,
+- timestamp.
+
+### Success Case
+
+Example valid input:
+
+```python
+{
+    "text": "Plan a monthly sales report"
+}
+```
+
+The accepted result also includes the text length as measurable evidence.
+
+### Rejection Case
+
+Example invalid input:
+
+```python
+{"text": "A" * 2001}
+```
+
+Expected result:
+
+```text
+status: rejected
+stage: input_processing
+reason: text must be <= 2000 characters
+timestamp: <generated timestamp>
+```
+
+This provides clear evidence showing why the request was rejected.
+
+### Other Rejection Cases
+
+The automated tests also verify rejection evidence for:
+
+- protected fields supplied by the user,
+- empty input,
+- text exceeding the configured length limit.
+
+Example protected-field rejection:
+
+```text
+Protected fields cannot be supplied by user
+```
+
+Example empty-input rejection:
+
+```text
+text is required
+```
+
+### Run Command
+
+Run the implementation using:
+
+```powershell
+python rejection_evidence.py
+```
+
+### Automated Tests
+
+Run the tests using:
+
+```powershell
+pytest tests/test_rejection_evidence.py -v
+```
+
+The tests cover:
+
+- valid input is accepted,
+- over-limit input creates rejection evidence,
+- protected fields create rejection evidence,
+- empty input creates rejection evidence.
+
+### Evidence
+
+Implementation output:
+
+```text
+outputs/rejection_evidence.txt
+```
+
+Automated test output:
+
+```text
+outputs/test_rejection_evidence.txt
+```
+
+### Traceability
+
+Rejected requests include the information needed to understand the failure:
+
+```text
+status
+stage
+reason
+timestamp
+```
+
+This makes the rejection behavior observable and reviewable instead of allowing the failure to disappear as an unstructured error.
+
+### Measurement
+
+For accepted requests, the input character count is included in the result.
+
+For rejected requests, the implementation records the exact reason and time of rejection.
+
+This provides measurable and traceable evidence for both success and failure behavior.
+
+### Guardrails
+
+The following safeguards are demonstrated in this task:
+
+- **Validation:** Existing input schema and validation rules are reused.
+- **Failure handling:** Expected validation failures are captured safely.
+- **Rejection evidence:** Rejection status, stage, reason, and timestamp are recorded.
+- **Traceability:** The cause of rejection remains visible.
+- **Measurement:** Accepted requests include the text character count.
+- **Secret hygiene:** No credentials or secrets are stored in the source code.
+
+Step limits, timeout, and retry are not applicable because the input pipeline contains no loops, external services, or transient operations.
+
+Rejected validation input is deterministic and should not be retried.
+
+
+
+
 
